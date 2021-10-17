@@ -7,8 +7,8 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "ts-node src/index.ts",
+    "dev:ts": "nodemon"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,8 @@
   },
   "homepage": "https://github.com/sadixu/node-blockchain-be#readme",
   "devDependencies": {
-    "nodemon": "^2.0.13"
+    "nodemon": "^2.0.13",
+    "ts-node": "^10.3.0",
+    "typescript": "^4.4.4"
   }
 }
