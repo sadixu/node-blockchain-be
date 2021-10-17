@@ -1,4 +1,4 @@
-import { runDemo } from "./exampleBlock";
+import { runDemo } from "./examples/exampleBlock";
+runDemo();
 
 console.log("Initialising Blockchain stuff.");
-runDemo();
