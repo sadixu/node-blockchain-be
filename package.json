@@ -1,0 +1,26 @@
+{
+  "name": "blockchain-be",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sadixu/node-blockchain-be.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sadixu/node-blockchain-be/issues"
+  },
+  "homepage": "https://github.com/sadixu/node-blockchain-be#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.13"
+  }
+}
