@@ -1,3 +1,4 @@
-console.log("hello blockchain");
-console.log('2"');
-console.log(4)
+import { runDemo } from "./exampleBlock";
+
+console.log("Initialising Blockchain stuff.");
+runDemo();
