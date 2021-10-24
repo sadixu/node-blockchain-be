@@ -25,4 +25,14 @@ export class Block {
     this.hash = hash;
     this.data = data;
   }
+
+  static mineBlock({
+    lastBlock,
+    data,
+  }: {
+    lastBlock: Block;
+    data: any;
+  }): Block {
+    return new Block({ lastHash: lastBlock.hash, data, hash: "112" });
+  }
 }
