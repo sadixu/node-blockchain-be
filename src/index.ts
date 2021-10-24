@@ -1,15 +1,11 @@
 import { Block } from "./blockchain/models/Block";
 import { GenesisBlock } from "./blockchain/models/GenesisBlock";
 
-console.log("Initialising Blockchain stuff.");
+console.info("Initializing Blockchain App");
 
+console.info("Creating Genesis Block...");
 const genBlock = GenesisBlock.create();
+console.info(genBlock);
 
-const block1 = new Block({
-  lastHash: "one",
-  hash: "one",
-  data: "data",
-});
-
-console.log(genBlock);
-console.log(block1);
+const block = Block.mineBlock({ lastBlock: genBlock, data: "test" });
+console.log(block);

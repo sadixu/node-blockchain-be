@@ -1,3 +1,5 @@
+import { hash } from "../../common/utils/cryptoHash";
+
 export class Block {
   // Timestamp, no more, no less
   public timestamp: string;
@@ -6,24 +8,16 @@ export class Block {
   public lastHash: string;
 
   // Data within blockchain
-  public data: any;
+  public data: string;
 
   // Pointer to that specific block
   public hash: string;
 
-  constructor({
-    lastHash,
-    hash,
-    data,
-  }: {
-    lastHash: string;
-    hash: string;
-    data: any;
-  }) {
+  constructor({ lastHash, data }: { lastHash: string; data: string }) {
     this.timestamp = new Date().toISOString();
     this.lastHash = lastHash;
-    this.hash = hash;
     this.data = data;
+    this.hash = hash(data);
   }
 
   static mineBlock({
@@ -31,8 +25,8 @@ export class Block {
     data,
   }: {
     lastBlock: Block;
-    data: any;
+    data: string;
   }): Block {
-    return new Block({ lastHash: lastBlock.hash, data, hash: "112" });
+    return new this({ lastHash: lastBlock.hash, data });
   }
 }

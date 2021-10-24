@@ -6,13 +6,11 @@ describe("Block model tests", () => {
     it("creates a new block", () => {
       const block = new Block({
         lastHash: "113",
-        hash: "451",
-        data: { exampleKey: "exampleValue" },
+        data: "test",
       });
 
       expect(block.lastHash).toEqual("113");
-      expect(block.hash).toEqual("451");
-      expect(block.data).toEqual({ exampleKey: "exampleValue" });
+      expect(block.data).toEqual("test");
       expect(block.timestamp).not.toBeNull();
     });
   });
