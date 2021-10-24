@@ -1,12 +1,9 @@
-// import { runDemo } from "./examples/exampleBlock";
-// runDemo();
-
 import { Block } from "./blockchain/models/Block";
-import { GenesisBlock } from './blockchain/models/GenesisBlock'
+import { GenesisBlock } from "./blockchain/models/GenesisBlock";
 
 console.log("Initialising Blockchain stuff.");
 
-const genBlock = GenesisBlock.create()
+const genBlock = GenesisBlock.create();
 
 const block1 = new Block({
   lastHash: "one",
@@ -14,4 +11,5 @@ const block1 = new Block({
   data: "data",
 });
 
+console.log(genBlock);
 console.log(block1);
