@@ -1,11 +1,32 @@
-import { Block } from "./blockchain/models/Block";
-import { GenesisBlock } from "./blockchain/models/GenesisBlock";
+import { Block } from "./app/models/Block";
+import { Blockchain } from "./app/models/Blockchain";
+import { GenesisBlock } from "./app/models/GenesisBlock";
+
+const full = false
 
 console.info("Initializing Blockchain App");
 
-console.info("Creating Genesis Block...");
-const genBlock = GenesisBlock.create();
-console.info(genBlock);
+if (full) {
+  console.info("Creating Genesis Block...");
+  const genBlock = GenesisBlock.create();
+  console.info(genBlock);
 
-const block = Block.mineBlock({ lastBlock: genBlock, data: "test" });
-console.log(block);
+  console.info('Mining block with custom data')
+  const block = Block.mineBlock({ lastBlock: genBlock, data: "test" });
+  console.log(block);
+}
+
+
+console.info('Generating a new chain')
+const chain = new Blockchain()
+console.log(chain)
+
+console.info('Adding block into the blockchain')
+chain.addBlock({ data: 'hello there' })
+console.log(chain)
+
+console.info('Validating the chain - checking if block contains the proper fields & if the lastHash is correct')
+
+function checkChain(chain: Blockchain) {
+  
+}
