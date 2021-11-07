@@ -1,6 +1,5 @@
 import { Block } from "./app/models/Block";
 import { Blockchain } from "./app/models/Blockchain";
-import { GenesisBlock } from "./app/models/GenesisBlock";
 
 const full = false
 
@@ -8,7 +7,7 @@ console.info("Initializing Blockchain App");
 
 if (full) {
   console.info("Creating Genesis Block...");
-  const genBlock = GenesisBlock.create();
+  const genBlock = Block.genesis();
   console.info(genBlock);
 
   console.info('Mining block with custom data')
@@ -26,7 +25,4 @@ chain.addBlock({ data: 'hello there' })
 console.log(chain)
 
 console.info('Validating the chain - checking if block contains the proper fields & if the lastHash is correct')
-
-function checkChain(chain: Blockchain) {
-  
-}
+console.log(Blockchain.isValidChain(chain))
