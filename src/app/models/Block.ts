@@ -1,5 +1,9 @@
 import * as crypto from "../../common/utils/cryptoHash";
-import { GENESIS_DATA, INITIAL_DIFFICULTY } from "../../config/constants";
+import {
+  GENESIS_DATA,
+  INITIAL_DIFFICULTY,
+  MINE_RATE,
+} from "../../config/constants";
 
 export class Block {
   timestamp: string;
@@ -64,5 +68,23 @@ export class Block {
       nonce: GENESIS_DATA.nonce,
       timestamp: new Date("10.05.2020").toISOString(),
     });
+  }
+
+  static adjustDifficulty({
+    originalBlock,
+    timestamp,
+  }: {
+    originalBlock: Block;
+    timestamp: string;
+  }): number {
+    const { difficulty } = originalBlock;
+
+    const difference =
+      new Date(timestamp).valueOf() -
+      new Date(originalBlock.timestamp).valueOf();
+
+    if (difference > MINE_RATE) return difficulty - 1;
+
+    return difficulty + 1;
   }
 }
