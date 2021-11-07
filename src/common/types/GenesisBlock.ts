@@ -1,5 +1,7 @@
 export interface GenesisBlockInterface {
   hash: string;
   lastHash: string;
-  data: any;
+  data: string;
+  difficulty: number;
+  nonce: any;
 }

@@ -28,11 +28,17 @@ export class Blockchain {
 
       const actualLastHash = blockchain.chain[i - 1].hash;
 
-      const { timestamp, lastHash, hash, data } = block;
+      const { timestamp, lastHash, hash, data, difficulty, nonce } = block;
 
       if (lastHash !== actualLastHash) return false;
 
-      const validatedHash = crypto.hash(timestamp, lastHash, data);
+      const validatedHash = crypto.hash(
+        timestamp,
+        lastHash,
+        data,
+        difficulty,
+        nonce
+      );
 
       if (hash !== validatedHash) return false;
     }
