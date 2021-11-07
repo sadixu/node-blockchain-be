@@ -43,11 +43,17 @@ export class Block {
   }): Block {
     let hash, timestamp;
     let nonce = 0;
-    const { difficulty } = lastBlock;
+    let { difficulty } = lastBlock;
 
     do {
       nonce++;
       timestamp = new Date().toISOString();
+
+      difficulty = Block.adjustDifficulty({
+        originalBlock: lastBlock,
+        timestamp,
+      });
+
       hash = crypto.hash(
         timestamp,
         lastBlock.hash,
