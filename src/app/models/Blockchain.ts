@@ -1,12 +1,11 @@
 import { Block } from "./Block";
-import { GenesisBlock } from "./GenesisBlock";
 import * as crypto from "../../common/utils/cryptoHash";
 
 export class Blockchain {
   chain: Array<Block>;
 
   constructor() {
-    this.chain = [GenesisBlock.create()];
+    this.chain = [Block.genesis()];
   }
 
   addBlock({ data }: { data: string }): Array<Block> {
@@ -21,10 +20,8 @@ export class Blockchain {
   }
 
   static isValidChain(blockchain: Blockchain): boolean {
-    console.log(blockchain.chain[0].hash)
-    console.log(Block.genesis().hash)
     if (blockchain.chain[0].data !== Block.genesis().data) return false;
-    // if (blockchain.chain[0].hash !== Block.genesis().hash) return false;
+    if (blockchain.chain[0].hash !== Block.genesis().hash) return false;
 
     for (let i = 1; i < blockchain.chain.length; i++) {
       const block = blockchain.chain[i];
