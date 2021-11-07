@@ -85,6 +85,8 @@ export class Block {
   }): number {
     const { difficulty } = originalBlock;
 
+    if (difficulty < 1) return 1;
+
     const difference =
       new Date(timestamp).valueOf() -
       new Date(originalBlock.timestamp).valueOf();

@@ -1,5 +1,4 @@
 import { Block } from "./Block";
-import { GenesisBlock } from "./GenesisBlock";
 
 describe("Block model tests", () => {
   describe("constructor", () => {
@@ -16,7 +15,7 @@ describe("Block model tests", () => {
   });
 
   describe("mineBlock", () => {
-    const lastBlock = GenesisBlock.create();
+    const lastBlock = Block.genesis();
 
     const data = "mined data";
     const mineBlock = Block.mineBlock({ lastBlock, data });
