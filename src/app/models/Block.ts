@@ -2,15 +2,11 @@ import * as crypto from "../../common/utils/cryptoHash";
 import { GENESIS_DATA, INITIAL_DIFFICULTY } from "../../config/constants";
 
 export class Block {
-  // Timestamp, no more, no less
   timestamp: string;
-  // Pointer to the previous block
   lastHash: string;
-  // Data within blockchain
   data: string;
-  // Pointer to that specific block
   hash: string;
-  nonce: string;
+  nonce: number;
   difficulty: number;
 
   constructor({
@@ -22,7 +18,7 @@ export class Block {
   }: {
     lastHash: string;
     data: string;
-    nonce: any;
+    nonce: number;
     difficulty: number;
     timestamp?: string;
   }) {
