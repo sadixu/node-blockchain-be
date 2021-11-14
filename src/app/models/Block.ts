@@ -1,12 +1,8 @@
 import * as crypto from "../../common/utils/cryptoHash";
-import {
-  GENESIS_DATA,
-  INITIAL_DIFFICULTY,
-  MINE_RATE,
-} from "../../config/constants";
+import { GENESIS_DATA, MINE_RATE } from "../../config/constants";
 
 export class Block {
-  timestamp: string;
+  timestamp: number;
   lastHash: string;
   data: string;
   hash: string;
@@ -24,9 +20,9 @@ export class Block {
     data: string;
     nonce: number;
     difficulty: number;
-    timestamp?: string;
+    timestamp?: number;
   }) {
-    this.timestamp = timestamp ? timestamp : new Date().toISOString();
+    this.timestamp = timestamp ? timestamp : new Date().valueOf();
     this.lastHash = lastHash;
     this.data = data;
     this.nonce = nonce;
@@ -47,7 +43,7 @@ export class Block {
 
     do {
       nonce++;
-      timestamp = new Date().toISOString();
+      timestamp = new Date().valueOf();
 
       difficulty = Block.adjustDifficulty({
         originalBlock: lastBlock,
@@ -72,7 +68,7 @@ export class Block {
       data: GENESIS_DATA.data,
       difficulty: GENESIS_DATA.difficulty,
       nonce: GENESIS_DATA.nonce,
-      timestamp: new Date("10.05.2020").toISOString(),
+      timestamp: new Date().valueOf(),
     });
   }
 
@@ -81,15 +77,12 @@ export class Block {
     timestamp,
   }: {
     originalBlock: Block;
-    timestamp: string;
+    timestamp: number;
   }): number {
     const { difficulty } = originalBlock;
-
     if (difficulty < 1) return 1;
 
-    const difference =
-      new Date(timestamp).valueOf() -
-      new Date(originalBlock.timestamp).valueOf();
+    const difference = timestamp - originalBlock.timestamp;
 
     if (difference > MINE_RATE) return difficulty - 1;
 
