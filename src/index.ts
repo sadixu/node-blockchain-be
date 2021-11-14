@@ -1,9 +1,21 @@
+import * as express from "express";
 import { Blockchain } from "./app/models/Blockchain";
 
-console.info("Initializing Blockchain App");
+const app = express();
+const PORT = 3356;
+
+const blockchain = new Blockchain();
+
+app.get("/api/blocks", (req, res) => {
+  res.sendStatus(200);
+});
+
+app.listen(PORT, () => {
+  console.log("Blockchain server online.");
+});
 
 const test = false;
-const timetest = true;
+const timetest = false;
 if (test) {
   console.info("Generating a new chain");
   const chain1 = new Blockchain();
@@ -36,11 +48,10 @@ if (test) {
   chain1.replaceChain(chain2);
   console.log(chain1);
 }
-
 if (timetest) {
   let prevTimestamp, nextTimestamp, nextBlock, timeDiff, average;
 
-  const length = 5;
+  const length = 100;
   const blockchain = new Blockchain();
   const times = [];
 
@@ -66,6 +77,3 @@ if (timetest) {
     console.log(`Average time: ${average}ms.`);
   }
 }
-
-const blockchain = new Blockchain();
-console.log(1);
