@@ -25,10 +25,9 @@ export class Blockchain {
 
     for (let i = 1; i < blockchain.chain.length; i++) {
       const block = blockchain.chain[i];
-
       const actualLastHash = blockchain.chain[i - 1].hash;
-
       const { timestamp, lastHash, hash, data, difficulty, nonce } = block;
+      const lastDifficulty = blockchain.chain[i - 1].difficulty;
 
       if (lastHash !== actualLastHash) return false;
 
@@ -41,6 +40,8 @@ export class Blockchain {
       );
 
       if (hash !== validatedHash) return false;
+
+      if (Math.abs(lastDifficulty - difficulty) > 1) return false;
     }
     return true;
   }
