@@ -1,5 +1,7 @@
 import * as crypto from "../../common/utils/cryptoHash";
 import { GENESIS_DATA, MINE_RATE } from "../../config/constants";
+import * as hexToBinary from "hex-to-binary";
+import * as hex from "string-hex";
 
 export class Block {
   timestamp: number;
@@ -57,7 +59,9 @@ export class Block {
         nonce.toString(),
         difficulty.toString()
       );
-    } while (hash.substring(0, difficulty) !== "0".repeat(difficulty));
+    } while (
+      hexToBinary(hex(hash)).substring(0, difficulty) !== "0".repeat(difficulty)
+    );
 
     return new this({ lastHash: lastBlock.hash, data, difficulty, nonce });
   }
