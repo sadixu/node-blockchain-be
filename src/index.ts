@@ -1,17 +1,30 @@
 import * as express from "express";
 import { Blockchain } from "./app/models/Blockchain";
+import { json } from "body-parser";
 
 const app = express();
 const PORT = 3356;
 
 const blockchain = new Blockchain();
 
+app.use(json());
+
 app.get("/api/blocks", (req, res) => {
-  res.sendStatus(200);
+  res.status(200).json(blockchain);
+});
+
+app.post("/api/mine", (req, res) => {
+  const {
+    body: { data },
+  } = req;
+
+  blockchain.addBlock({ data });
+
+  res.status(201).send("OK");
 });
 
 app.listen(PORT, () => {
-  console.log("Blockchain server online.");
+  console.log(`Blockchain server online on port: ${PORT}.`);
 });
 
 const test = false;
