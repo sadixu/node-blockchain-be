@@ -1,6 +1,9 @@
 import * as express from "express";
 import { Blockchain } from "./app/models/Blockchain";
 import { json } from "body-parser";
+import { PubSub } from "./common/utils/pubsub";
+import { CHANNELS } from "./common/utils/peertopeer";
+import { PubSubNub } from "./common/utils/pubnub";
 
 const app = express();
 const PORT = 3356;
@@ -23,8 +26,18 @@ app.post("/api/mine", (req, res) => {
   res.status(201).send("OK");
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`Blockchain server online on port: ${PORT}.`);
+
+  const testPubSub = new PubSub();
+  await testPubSub.connect();
+  await testPubSub.subscribe();
+  testPubSub.publish("foo");
+
+  // const testPubNub = new PubSubNub();
+  // await testPubNub.subscribe();
+  // await testPubNub.listen();
+  // await testPubNub.publish(CHANNELS.TEST, "elo here");
 });
 
 const test = false;
