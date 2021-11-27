@@ -22,7 +22,11 @@ export class Blockchain {
 
   static isValidChain(blockchain: Blockchain): boolean {
     if (blockchain.chain[0].data !== Block.genesis().data) return false;
-    if (blockchain.chain[0].hash !== Block.genesis().hash) return false;
+    if (
+      blockchain.chain[0].hash !==
+      Block.genesis(blockchain.chain[0].timestamp).hash
+    )
+      return false;
 
     for (let i = 1; i < blockchain.chain.length; i++) {
       const block = blockchain.chain[i];
@@ -49,12 +53,15 @@ export class Blockchain {
 
   replaceChain(blockchain: Blockchain): Blockchain {
     if (
-      blockchain.chain.length > 1 &&
+      blockchain.chain.length < 2 &&
       blockchain.chain.length <= this.chain.length
     ) {
       logger.softError("The incoming chain must be longer");
       return;
     }
+    // console.log(blockchain.chain);
+    // console.log(this.chain);
+    // console.log(Blockchain.isValidChain(blockchain));
 
     if (!Blockchain.isValidChain(blockchain)) {
       logger.softError("The incoming chain must be valid!");

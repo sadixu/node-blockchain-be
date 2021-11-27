@@ -47,15 +47,3 @@ class Blockchain {
     this.chain.push(block);
   }
 }
-
-export function runDemo(): void {
-  // Creating a blockchain
-  const fooBlockchain = new Blockchain()
-  
-  // Adding some blocks
-  
-  fooBlockchain.addBlock('one')
-  fooBlockchain.addBlock('two')
-
-  console.log(fooBlockchain)
-}

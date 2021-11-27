@@ -69,14 +69,13 @@ export class Block {
     return new this({ lastHash: lastBlock.hash, data, difficulty, nonce });
   }
 
-  static genesis(): Block {
-    logger.log("Creating genesis block, sounds fun :)!");
+  static genesis(timestamp = new Date().valueOf()): Block {
     return new Block({
       lastHash: GENESIS_DATA.lastHash,
       data: GENESIS_DATA.data,
       difficulty: GENESIS_DATA.difficulty,
       nonce: GENESIS_DATA.nonce,
-      timestamp: new Date().valueOf(),
+      timestamp,
     });
   }
 

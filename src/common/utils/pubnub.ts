@@ -19,10 +19,6 @@ export class PubSubNub {
     this.pubnub.addListener({
       message: (messageObject: { channel: string; message: string }) => {
         const { channel, message } = messageObject;
-
-        console.log(
-          `Message received. Channel: ${channel}. Message: ${message}.`
-        );
       },
     });
   }
