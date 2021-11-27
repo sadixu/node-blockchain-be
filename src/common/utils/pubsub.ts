@@ -20,12 +20,16 @@ export class PubSub {
   }
 
   async handleMessage(channel: string, message: string) {
-    logger.log(`Message received. Channel: ${channel}. Message: ${message}`);
-
-    const parsedMessage = JSON.parse(message);
-
     if (channel === CHANNELS.BLOCKCHAIN) {
+      logger.log(
+        `Message received. Channel: ${channel}. Message contains new blockchain.`
+      );
+
+      const parsedMessage = JSON.parse(message);
+
       this.blockchain.replaceChain(parsedMessage);
+    } else {
+      logger.log(`Message received. Channel: ${channel}. Message: ${message}`);
     }
   }
 

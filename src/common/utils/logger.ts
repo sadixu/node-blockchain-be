@@ -26,6 +26,15 @@ class Logger {
       .log(`${this.getCurrentTime()} ${this.apiName}: ${message}`);
   }
 
+  happy(message: string) {
+    clogger
+      .color("cyan")
+      .bold()
+      .italic()
+      .dim()
+      .log(`${this.getCurrentTime()} ${this.apiName}: ${message}`);
+  }
+
   log(message: string) {
     clogger
       .color("green")

@@ -59,10 +59,6 @@ export class Blockchain {
       logger.softError("The incoming chain must be longer");
       return;
     }
-    // console.log(blockchain.chain);
-    // console.log(this.chain);
-    // console.log(Blockchain.isValidChain(blockchain));
-
     if (!Blockchain.isValidChain(blockchain)) {
       logger.softError("The incoming chain must be valid!");
       return;

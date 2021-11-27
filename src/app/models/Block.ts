@@ -64,7 +64,7 @@ export class Block {
       hexToBinary(hex(hash)).substring(0, difficulty) !== "0".repeat(difficulty)
     );
 
-    logger.log("Ha! I just mined a new block!");
+    logger.happy("Ha! I just mined a new block!");
 
     return new this({ lastHash: lastBlock.hash, data, difficulty, nonce });
   }

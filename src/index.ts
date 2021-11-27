@@ -17,7 +17,7 @@ const pubsub = new PubSub({ blockchain });
 const initializeRedis = async () => {
   await pubsub.connect();
   await pubsub.subscribe();
-  // await pubsub.broadcastChain();
+  await pubsub.broadcastChain();
 };
 
 app.use(json());
