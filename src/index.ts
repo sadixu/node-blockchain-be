@@ -20,6 +20,15 @@ const initializeRedis = async () => {
   await pubsub.broadcastChain();
 };
 
+const generatePeerPort = (): number => {
+  let peerPort: number = 0;
+  if (process.env.GENERATE_PEER_PORT === "true") {
+    peerPort = PORT + Math.ceil(Math.random() * 1000);
+  }
+
+  return peerPort;
+};
+
 app.use(json());
 
 app.get("/api/blocks", (req, res) => {
@@ -38,7 +47,10 @@ app.post("/api/mine", async (req, res) => {
   res.status(201).send("OK");
 });
 
-app.listen(PORT, async () => {
-  logger.info(`Blockchain server online on port: ${PORT}.`);
+app.listen(generatePeerPort() || PORT, async () => {
+  console.log(process.env.GENERATE_PEER_PORT);
+  logger.info(
+    `Blockchain server online on port: ${generatePeerPort() || PORT}.`
+  );
   await initializeRedis();
 });
