@@ -1,9 +1,8 @@
 import * as crypto from "../../common/utils/cryptoHash";
-import { GENESIS_DATA, MINE_RATE } from "../../config/constants";
+import { GENESIS_DATA, MINE_RATE, API_NAME } from "../../config/constants";
 import * as hexToBinary from "hex-to-binary";
 import * as hex from "string-hex";
 import { logger } from "../../common/utils/logger";
-
 export class Block {
   timestamp: number;
   lastHash: string;
@@ -11,6 +10,7 @@ export class Block {
   hash: string;
   nonce: number;
   difficulty: number;
+  author: string;
 
   constructor({
     lastHash,

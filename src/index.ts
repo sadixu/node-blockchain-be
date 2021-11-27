@@ -3,16 +3,15 @@ import { Blockchain } from "./app/models/Blockchain";
 import { json } from "body-parser";
 import { PubSub } from "./common/utils/pubsub";
 import { logger } from "./common/utils/logger";
+import axios from "axios";
+import { PORT, ROOT_NODE_ADDRESS, PEER_PORT } from "./config/constants";
 
-// TODO list:
-/*
-  1. Allow to run multiple apps, thus check if port is taken before running the app, if not, run the app, if yes, search for another port :)
-  2. or check inside the CLI if param api: true was passed, if yes, run the REST api, if not, run redis without API
-*/
 const app = express();
-const PORT = 3356;
+app.use(json());
+
 const blockchain = new Blockchain();
 const pubsub = new PubSub({ blockchain });
+const tempPort = PEER_PORT();
 
 const initializeRedis = async () => {
   await pubsub.connect();
@@ -20,16 +19,15 @@ const initializeRedis = async () => {
   await pubsub.broadcastChain();
 };
 
-const generatePeerPort = (): number => {
-  let peerPort: number = 0;
-  if (process.env.GENERATE_PEER_PORT === "true") {
-    peerPort = PORT + Math.ceil(Math.random() * 1000);
+const syncChains = async (blockchain: Blockchain): Promise<void> => {
+  try {
+    const { data } = await axios.get(`${ROOT_NODE_ADDRESS}/api/blocks`);
+
+    blockchain.replaceChain(data);
+  } catch (err) {
+    logger.error(err);
   }
-
-  return peerPort;
 };
-
-app.use(json());
 
 app.get("/api/blocks", (req, res) => {
   res.status(200).json(blockchain);
@@ -47,10 +45,11 @@ app.post("/api/mine", async (req, res) => {
   res.status(201).send("OK");
 });
 
-app.listen(generatePeerPort() || PORT, async () => {
-  console.log(process.env.GENERATE_PEER_PORT);
-  logger.info(
-    `Blockchain server online on port: ${generatePeerPort() || PORT}.`
-  );
+app.listen(tempPort || PORT, async () => {
+  if (tempPort !== PORT) {
+    await syncChains(blockchain);
+  }
+
+  logger.info(`Blockchain server online on port: ${tempPort || PORT}.`);
   await initializeRedis();
 });

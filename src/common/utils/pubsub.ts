@@ -11,12 +11,13 @@ export class PubSub {
 
   constructor({ blockchain }: { blockchain: Blockchain }) {
     this.blockchain = blockchain;
-    const client = createClient({
+
+    this.subscriber = createClient({
       url: "redis://0.0.0.0:6379",
     });
-
-    this.subscriber = client.duplicate();
-    this.publisher = client.duplicate();
+    this.publisher = createClient({
+      url: "redis://0.0.0.0:6379",
+    });
   }
 
   async handleMessage(channel: string, message: string) {
@@ -41,7 +42,7 @@ export class PubSub {
   }
 
   async subscribe() {
-    await this.subscriber.pSubscribe(
+    await this.subscriber.subscribe(
       CHANNELS.BLOCKCHAIN,
       async (message: string, channel: string) => {
         await this.handleMessage(channel, message);
@@ -50,7 +51,9 @@ export class PubSub {
   }
 
   async publish(message: string, channel = CHANNELS.BLOCKCHAIN) {
+    await this.subscriber.unsubscribe();
     await this.publisher.publish(channel, message);
+    await this.subscribe();
     logger.log(`Pushed the message to the ${channel} channel.`);
   }
 

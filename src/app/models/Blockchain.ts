@@ -53,7 +53,7 @@ export class Blockchain {
 
   replaceChain(blockchain: Blockchain): Blockchain {
     if (
-      blockchain.chain.length < 2 &&
+      blockchain.chain.length > 1 &&
       blockchain.chain.length <= this.chain.length
     ) {
       logger.softError("The incoming chain must be longer");
