@@ -2,11 +2,21 @@ import * as express from "express";
 import { Blockchain } from "./app/models/Blockchain";
 import { json } from "body-parser";
 import { PubSub } from "./common/utils/pubsub";
+import { logger } from "./common/utils/logger";
 
+// TODO list:
+/*
+  1. Allow to run multiple apps, thus check if port is taken before running the app, if not, run the app, if yes, search for another port :)
+*/
 const app = express();
 const PORT = 3356;
-
 const blockchain = new Blockchain();
+
+const initializeRedis = async () => {
+  const pubsub = new PubSub({ blockchain });
+  await pubsub.connect();
+  pubsub.broadcastChain();
+};
 
 app.use(json());
 
@@ -25,13 +35,8 @@ app.post("/api/mine", (req, res) => {
 });
 
 app.listen(PORT, async () => {
-  console.log(`Blockchain server online on port: ${PORT}.`);
-
-  const testPubSub = new PubSub();
-  await testPubSub.connect();
-  await testPubSub.subscribe();
-
-  await testPubSub.publish("foo");
+  logger.info(`Blockchain server online on port: ${PORT}.`);
+  await initializeRedis();
 });
 
 const test = false;

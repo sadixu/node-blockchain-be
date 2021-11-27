@@ -1,11 +1,15 @@
 import { createClient } from "redis";
-import { CHANNELS } from "./peertopeer";
+import { Blockchain } from "../../app/models/Blockchain";
+import { CHANNELS } from "../../config/peertopeer";
+import { logger } from "./logger";
 
 export class PubSub {
   publisher: any;
   subscriber: any;
+  blockchain: Blockchain;
 
-  constructor() {
+  constructor({ blockchain }: { blockchain: Blockchain }) {
+    this.blockchain = blockchain;
     const client = createClient({
       url: "redis://0.0.0.0:6379",
     });
@@ -14,27 +18,37 @@ export class PubSub {
     this.publisher = client.duplicate();
   }
 
-  handleMessage(channel: string, message: string) {
-    console.log(`Message received. Channel: ${channel}. Message: ${message}`);
+  async handleMessage(channel: string, message: string) {
+    logger.log(`Message received. Channel: ${channel}. Message: ${message}`);
+
+    const parsedMessage = JSON.parse(message);
+
+    if (channel === CHANNELS.BLOCKCHAIN) {
+      this.blockchain.replaceChain(parsedMessage);
+    }
   }
 
   async connect() {
     await this.publisher.connect();
-    console.log("Publisher connected.");
+    logger.info("Publisher connected.");
     await this.subscriber.connect();
-    console.log("Subscriber connected.");
+    logger.info("Subscriber connected.");
   }
 
   async subscribe() {
     await this.subscriber.pSubscribe(
-      CHANNELS.TEST,
-      (message: string, channel: string) => {
-        this.handleMessage(channel, message);
+      CHANNELS.BLOCKCHAIN,
+      async (message: string, channel: string) => {
+        await this.handleMessage(channel, message);
       }
     );
   }
 
-  async publish(message: string) {
-    await this.publisher.publish(CHANNELS.TEST, message);
+  async publish(message: string, channel = CHANNELS.BLOCKCHAIN) {
+    await this.publisher.publish(channel, message);
+  }
+
+  async broadcastChain() {
+    this.publish(JSON.stringify(this.blockchain.chain));
   }
 }

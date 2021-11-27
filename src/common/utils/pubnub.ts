@@ -1,6 +1,6 @@
 import { credentials } from "../../config/pubnubconfig";
 import * as Pubnub from "pubnub";
-import { CHANNELS } from "./peertopeer";
+import { CHANNELS } from "../../config/peertopeer";
 
 export class PubSubNub {
   subscriber: any;

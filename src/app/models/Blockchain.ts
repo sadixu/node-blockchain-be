@@ -1,5 +1,6 @@
 import { Block } from "./Block";
 import * as crypto from "../../common/utils/cryptoHash";
+import { logger } from "../../common/utils/logger";
 
 export class Blockchain {
   chain: Array<Block>;
@@ -48,12 +49,12 @@ export class Blockchain {
 
   replaceChain(blockchain: Blockchain): Blockchain {
     if (blockchain.chain.length <= this.chain.length) {
-      console.error("The incoming chain must be longer");
+      logger.softError("The incoming chain must be longe");
       return;
     }
 
     if (!Blockchain.isValidChain(blockchain)) {
-      console.log("The incoming chain must be valid!");
+      logger.softError("The incoming chain must be valid!");
       return;
     }
 
