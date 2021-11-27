@@ -55,6 +55,7 @@ export class PubSub {
   }
 
   async broadcastChain() {
+    logger.log("Broadcasting chain to the network.");
     await this.publish(JSON.stringify(this.blockchain));
   }
 }
