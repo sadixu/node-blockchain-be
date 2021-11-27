@@ -2,6 +2,7 @@ import * as crypto from "../../common/utils/cryptoHash";
 import { GENESIS_DATA, MINE_RATE } from "../../config/constants";
 import * as hexToBinary from "hex-to-binary";
 import * as hex from "string-hex";
+import { logger } from "../../common/utils/logger";
 
 export class Block {
   timestamp: number;
@@ -63,10 +64,13 @@ export class Block {
       hexToBinary(hex(hash)).substring(0, difficulty) !== "0".repeat(difficulty)
     );
 
+    logger.log("Ha! I just mined a new block!");
+
     return new this({ lastHash: lastBlock.hash, data, difficulty, nonce });
   }
 
   static genesis(): Block {
+    logger.log("Creating genesis block, sounds fun :)!");
     return new Block({
       lastHash: GENESIS_DATA.lastHash,
       data: GENESIS_DATA.data,

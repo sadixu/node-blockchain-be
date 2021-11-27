@@ -1,4 +1,5 @@
 import { createClient } from "redis";
+import { Block } from "../../app/models/Block";
 import { Blockchain } from "../../app/models/Blockchain";
 import { CHANNELS } from "../../config/peertopeer";
 import { logger } from "./logger";
@@ -46,9 +47,10 @@ export class PubSub {
 
   async publish(message: string, channel = CHANNELS.BLOCKCHAIN) {
     await this.publisher.publish(channel, message);
+    logger.log(`Pushed the message to the ${channel} channel.`);
   }
 
   async broadcastChain() {
-    this.publish(JSON.stringify(this.blockchain.chain));
+    await this.publish(JSON.stringify(this.blockchain));
   }
 }
