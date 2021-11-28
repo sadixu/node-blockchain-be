@@ -1,0 +1,27 @@
+@port = 3356
+@secondaryPort = 4342
+
+### Fetch blockchain from root node
+GET http://localhost:{{port}}/api/blocks
+
+### Mine new block on root node
+
+POST http://localhost:{{port}}/api/mine HTTP/1.1
+
+content-type: application/json
+{
+    "data": "nodisc1223"
+}
+
+### Fetch blockchain from secondary node
+GET http://localhost:{{secondaryPort}}/api/blocks
+
+### Mine new block on secondary node
+
+POST http://localhost:{{secondaryPort}}/api/mine HTTP/1.1
+
+content-type: application/json
+{
+    "data": "nodisc1223"
+}
+
