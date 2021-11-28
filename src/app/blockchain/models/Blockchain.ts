@@ -1,6 +1,6 @@
-import { Block } from "./Block";
-import * as crypto from "../../common/utils/cryptoHash";
-import { logger } from "../../common/utils/logger";
+import { Block } from "../../block/models/Block";
+import * as crypto from "../../../utils/cryptoHash";
+import { logger } from "../../../utils/logger";
 
 export class Blockchain {
   chain: Array<Block>;

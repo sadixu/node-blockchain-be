@@ -1,7 +1,6 @@
 import { createClient } from "redis";
-import { Block } from "../../app/models/Block";
-import { Blockchain } from "../../app/models/Blockchain";
-import { CHANNELS } from "../../config/peertopeer";
+import { Blockchain } from "../app/blockchain/models/Blockchain";
+import { CHANNELS } from "../config/peertopeer";
 import { logger } from "./logger";
 
 export class PubSub {

@@ -1,4 +1,4 @@
-import { GenesisBlockInterface } from "../common/types/GenesisBlock";
+import { GenesisBlockInterface } from "../types/GenesisBlock";
 import faker = require("faker");
 
 export const INITIAL_DIFFICULTY = 3;

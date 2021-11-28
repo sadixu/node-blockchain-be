@@ -1,8 +1,8 @@
 import * as express from "express";
-import { Blockchain } from "./app/models/Blockchain";
+import { Blockchain } from "./app/blockchain/models/Blockchain";
 import { json } from "body-parser";
-import { PubSub } from "./common/utils/pubsub";
-import { logger } from "./common/utils/logger";
+import { PubSub } from "./utils/pubsub";
+import { logger } from "./utils/logger";
 import axios from "axios";
 import { PORT, ROOT_NODE_ADDRESS, PEER_PORT } from "./config/constants";
 

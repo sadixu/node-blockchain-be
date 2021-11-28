@@ -1,4 +1,4 @@
-import { API_NAME } from "../../config/constants";
+import { API_NAME } from "../config/constants";
 import clogger = require("node-color-log");
 
 class Logger {
